@@ -13,23 +13,38 @@ import java.util.ArrayList;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 2020
+ * @author Safi Khalid Jun 2020
  */
 public abstract class Game {
 
     private final String name;//the title of the game
     private ArrayList<Player> players;// the players of the game
-
+    private boolean dirClockwise;
+    private int currentPlayer;
+    private DiscardPile discard;
+    private Deck deck;
+    
+    
     public Game(String name) {
         this.name = name;
         players = new ArrayList();
     }
 
+    public void prepareGame() {}
+    
     /**
      * @return the name
      */
     public String getName() {
         return name;
     }
+    
+    public void userTurn() {}
+    
+    public void computerTurn() {}
+    
+    
+
 
     /**
      * @return the players of this game
