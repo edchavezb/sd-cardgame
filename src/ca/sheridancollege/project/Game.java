@@ -30,6 +30,9 @@ public abstract class Game {
         players = new ArrayList();
     }
 
+    /**
+     * will prepare the players and create hand objects
+     */
     public void prepareGame() {}
     
     /**

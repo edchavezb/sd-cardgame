@@ -21,8 +21,7 @@ public class GroupOfCards {
     //The group of cards, stored in an ArrayList
     private ArrayList<Card> cards;
 
-    public GroupOfCards() {
-    }
+    public GroupOfCards() {}
 
     /**
      * A method that will get the group of cards as an ArrayList
