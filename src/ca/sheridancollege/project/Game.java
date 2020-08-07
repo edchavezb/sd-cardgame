@@ -6,6 +6,7 @@
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The class that models your game. You should create a more specific child of this class and instantiate the methods
@@ -17,7 +18,6 @@ import java.util.ArrayList;
  */
 public abstract class Game {
 
-    private final String name;//the title of the game
     private ArrayList<Player> players;// the players of the game
     private boolean dirClockwise;
     private int currentPlayer;
@@ -25,21 +25,27 @@ public abstract class Game {
     private Deck deck;
     
     
-    public Game(String name) {
-        this.name = name;
+    public Game() {
         players = new ArrayList();
     }
 
     /**
      * will prepare the players and create hand objects
+     * @param players
      */
-    public void prepareGame() {}
-    
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public void prepareGame() {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("How many human players will this round have?");
+        int humans = scan.nextInt();
+        System.out.print("How many computer players will this round have?");
+        int computers = scan.nextInt();
+        
+        for (int i = 0; i <= humans; i++) {
+            System.out.println("Enter the name of player number " + i + ": ");
+            String playerName = scan.next();
+            Player player = new HumanPlayer(playerName);
+        }
+        
     }
     
     public void userTurn() {}
