@@ -42,6 +42,14 @@ public abstract class Player {
         this.name = name;
     }
     
+    public Hand getPlayerHand() {
+        return playerHand;
+    }
+
+    public void setPlayerHand(Hand playerHand) {
+        this.playerHand = playerHand;
+    }
+    
     public void draw(int drawAmount) {}
     
     

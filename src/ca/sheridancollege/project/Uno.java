@@ -6,6 +6,8 @@
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -21,43 +23,68 @@ public class Uno extends Game {
     @Override
     public void prepareGame(){
         
-        ArrayList<Card> unoDeck = new ArrayList();
+        Scanner scan = new Scanner(System.in);
+        
+        ArrayList<Card> cards = new ArrayList();
         
         DeckGenerator numberedCards = new DeckGenerator(Number.class, Color.class);
-        unoDeck.addAll(numberedCards.create());
+        cards.addAll(numberedCards.create());
         
         DeckGenerator specialCards = new DeckGenerator(Effect.class, Color.class);
-        unoDeck.addAll(specialCards.create());
+        cards.addAll(specialCards.create());
         
-        for(Card card : unoDeck){
-            System.out.println(card.toString()); 
-        }
+        Deck unoDeck = new Deck(cards);
+        this.setDeck(unoDeck);
         
-        Scanner scan = new Scanner(System.in);
+        DiscardPile discard = new DiscardPile(new ArrayList<Card>());
+        this.setDiscardPile(discard);
+        
+        System.out.println(unoDeck.getCards().size());
+        
+        ArrayList<Player> players = new ArrayList();
+        HandGenerator unoHand = new HandGenerator(this.getDeck(), 7);
+        
         System.out.print("How many human players will this round have? ");
-        int humans = scan.nextInt();
-        System.out.print("How many computer players will this round have? ");
-        int computers = scan.nextInt();
-        
-        ArrayList<Player> humanPlayers = new ArrayList();
-        ArrayList<Player> comPlayers = new ArrayList();
-        
-        for (int i = 1; i <= humans; i++) {
+        int numHumans = scan.nextInt();
+        for (int i = 1; i <= numHumans; i++) {
             System.out.println("Enter the name of player number " + i + ": ");
             String playerName = scan.next();
             Player player = new HumanPlayer(playerName);
+            player.setPlayerHand(unoHand.create());
+            players.add(player);
         }
         
-        for (int i = 1; i <= computers; i++) {
+        System.out.print("How many computer players will this round have? ");
+        int numComputers = scan.nextInt();
+        for (int i = 1; i <= numComputers; i++) {
             String playerName = "COM" + i;
             Player player = new ComputerPlayer(playerName);
+            player.setPlayerHand(unoHand.create());
+            players.add(player);
         }
+        
+        Collections.shuffle(players);
+        this.setPlayers(players);
+        
+        int random = new Random().nextInt(unoDeck.getCards().size());
+        Card randomCard = unoDeck.getCards().get(random);
+        discard.getCards().add(randomCard);
+        discard.setCardOnTop();
+        
+        System.out.println("Hands created");
+        System.out.println(unoDeck.getCards().size());
         
     }
     
     @Override
     public void play(){
-        
+        int playerIndex = this.getCurrentPlayer();
+        Player currentPlayer = this.getPlayers().get(playerIndex);
+        if (currentPlayer instanceof HumanPlayer){
+            this.userTurn(currentPlayer);
+        } else {
+            this.computerTurn(currentPlayer);
+        }
     }
     
     @Override
@@ -65,6 +92,17 @@ public class Uno extends Game {
         
     }
     
+    public void userTurn(Player player) {
+        Card modelCard = this.getDiscardPile().getCardOnTop();
+        Hand playerHand = player.getPlayerHand();
+        System.out.println("User turn: " + player.getName());
+        System.out.println("Last card played: " + modelCard);
+    }
     
+    public void computerTurn(Player player) {
+        Card modelCard = this.getDiscardPile().getCardOnTop();
+        System.out.println("Computer turn: " + player.getName());
+        System.out.println("Last card played: " + modelCard);
+    }
     
 }

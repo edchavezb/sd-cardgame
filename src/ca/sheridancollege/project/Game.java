@@ -21,24 +21,10 @@ public abstract class Game {
 
     private ArrayList<Player> players;// the players of the game
     private boolean dirClockwise;
-    private int currentPlayer;
-    private DiscardPile discard;
+    private int currentPlayer = 0;
+    private DiscardPile discardPile;
     private Deck deck;
     
-    
-    public Game() {
-        players = new ArrayList();
-    }
-
-    public void prepareGame() {}
-    
-    public void userTurn() {}
-    
-    public void computerTurn() {}
-    
-    
-
-
     /**
      * @return the players of this game
      */
@@ -52,6 +38,45 @@ public abstract class Game {
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
+
+    public boolean isDirClockwise() {
+        return dirClockwise;
+    }
+
+    public void setDirClockwise(boolean dirClockwise) {
+        this.dirClockwise = dirClockwise;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public DiscardPile getDiscardPile() {
+        return discardPile;
+    }
+
+    public void setDiscardPile(DiscardPile discard) {
+        this.discardPile = discard;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+    
+    
+    public Game() {
+        players = new ArrayList();
+    }
+    
+    public void prepareGame() {}
 
     /**
      * Play the game. This might be one method or many method calls depending on your game.

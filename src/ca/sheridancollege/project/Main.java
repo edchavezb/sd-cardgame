@@ -16,5 +16,6 @@ public class Main {
         
         Uno myUno = new Uno();
         myUno.prepareGame();
+        myUno.play();
     }
 }
