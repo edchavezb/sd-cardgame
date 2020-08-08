@@ -14,6 +14,21 @@ package ca.sheridancollege.project;
  */
 public abstract class Card {
     //default modifier for child classes
+    private Value value;
+    private Suit suit;
+    
+    public Card(Value value, Suit suit) {
+        this.value = value;
+        this.suit = suit;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 
     /**
      * Students should implement this method for their specific children classes

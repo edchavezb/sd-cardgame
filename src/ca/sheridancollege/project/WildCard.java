@@ -12,10 +12,11 @@ public class WildCard extends Card {
 
     
     /**
-	 * 
-	 * @param drawFour
-	 */
-	private WildCard(boolean drawFour) {
+    * 
+    * @param drawFour
+    */
+    private WildCard(Value value, Suit suit, boolean drawFour) {
+        super(value, suit);
         this.drawFour = drawFour;
     }
 

@@ -15,6 +15,7 @@ import java.util.Scanner;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  * @author Safi Khalid Jun 2020
+ * @author Edgar Chavez Jun 2020
  */
 public abstract class Game {
 
@@ -29,24 +30,7 @@ public abstract class Game {
         players = new ArrayList();
     }
 
-    /**
-     * will prepare the players and create hand objects
-     * @param players
-     */
-    public void prepareGame() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("How many human players will this round have?");
-        int humans = scan.nextInt();
-        System.out.print("How many computer players will this round have?");
-        int computers = scan.nextInt();
-        
-        for (int i = 0; i <= humans; i++) {
-            System.out.println("Enter the name of player number " + i + ": ");
-            String playerName = scan.next();
-            Player player = new HumanPlayer(playerName);
-        }
-        
-    }
+    public void prepareGame() {}
     
     public void userTurn() {}
     

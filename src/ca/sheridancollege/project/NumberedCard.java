@@ -3,11 +3,10 @@ package ca.sheridancollege.project;
 public class NumberedCard extends Card {
 
     private Color color;
-    private CardValues cardVal;
+    private Number cardVal;
     
-    private NumberedCard(Color color, CardValues val) {
-        this.color = color;
-        this.cardVal = val;
+    public NumberedCard(Value value, Suit suit) {
+        super(value, suit);
     }
 
     public Color getColor() {
@@ -18,16 +17,17 @@ public class NumberedCard extends Card {
         this.color = color;
     }
 
-    public CardValues getCardVal() {
+    public Number getCardVal() {
         return cardVal;
     }
 
-    public void setCardVal(CardValues cardVal) {
+    public void setCardVal(Number cardVal) {
         this.cardVal = cardVal;
     }
     
     @Override
     public String toString() {
-        return String.format("%s %d", color.getColorName(), cardVal.getValue());
+        return String.format("%s %s", super.getValue().getValueName(),
+                super.getSuit().getSuitName());
     }
 }

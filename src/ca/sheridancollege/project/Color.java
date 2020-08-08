@@ -1,6 +1,6 @@
 package ca.sheridancollege.project;
 
-public enum Color {
+public enum Color implements Suit{
     RED ("Red"),
     BLUE ("Blue"),
     GREEN ("Green"),
@@ -8,11 +8,12 @@ public enum Color {
     
     private String colorName;
     
-    public String getColorName() {
-        return colorName;
-    }
-    
     private Color(String color){
         this.colorName = color;
     }
+    
+    public String getSuitName() {
+        return colorName;
+    }
+   
 }
