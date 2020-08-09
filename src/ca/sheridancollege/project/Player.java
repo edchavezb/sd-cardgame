@@ -5,6 +5,8 @@
  */
 package ca.sheridancollege.project;
 
+import java.util.Random;
+
 /**
  * A class that models each Player in the game. Players have an identifier, which should be unique.
  *
@@ -50,13 +52,21 @@ public abstract class Player {
         this.playerHand = playerHand;
     }
     
-    public void draw(int drawAmount) {}
+    public void draw(int drawAmount, Deck deck) {
+        for (int i = 0; i < drawAmount; i++) {
+            int random = new Random().nextInt(deck.getCards().size());
+            Card drawCard = deck.getCards().get(random);
+            this.getPlayerHand().getCards().add(drawCard);
+            deck.getCards().remove(drawCard);
+        }
+        System.out.printf("%s drew %d card(s)%n%n", this.getName(), drawAmount);
+    }
     
     
     /**
      * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
      * with logic to play your game.
      */
-    public abstract void play();
+    public abstract void play(Card card, DiscardPile discard);
 
 }

@@ -16,20 +16,38 @@ public abstract class Card {
     //default modifier for child classes
     private Value value;
     private Suit suit;
+    private Game game;
     
-    public Card(Value value, Suit suit) {
+    public Card(Value value, Suit suit, Game game) {
         this.value = value;
         this.suit = suit;
+        this.game = game;
     }
 
     public Value getValue() {
         return value;
     }
 
+    public void setValue(Value value) {
+        this.value = value;
+    }
+
     public Suit getSuit() {
         return suit;
     }
+    
+    public void setSuit(Suit suit) {
+        this.suit = suit;
+    }
+    
+    public Game getGame() {
+        return game;
+    }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    
     /**
      * Students should implement this method for their specific children classes
      *

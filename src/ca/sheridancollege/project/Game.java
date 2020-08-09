@@ -20,10 +20,15 @@ import java.util.Scanner;
 public abstract class Game {
 
     private ArrayList<Player> players;// the players of the game
-    private boolean dirClockwise;
+    private boolean dirClockwise = true;
     private int currentPlayer = 0;
     private DiscardPile discardPile;
     private Deck deck;
+    private Player winner;
+    
+    public Game() {
+        players = new ArrayList();
+    }
     
     /**
      * @return the players of this game
@@ -70,10 +75,13 @@ public abstract class Game {
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
-    
-    
-    public Game() {
-        players = new ArrayList();
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
     }
     
     public void prepareGame() {}
@@ -86,6 +94,6 @@ public abstract class Game {
     /**
      * When the game is over, use this method to declare and display a winning player.
      */
-    public abstract void declareWinner();
+    public abstract void declareWinner(Player player);
 
 }//end class

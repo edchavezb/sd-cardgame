@@ -16,11 +16,13 @@ public class DeckGenerator {
     
     private final Class<? extends Enum<?>> value;
     private final Class<? extends Enum<?>> suit;
+    private Game game;
 
     public DeckGenerator(Class<? extends Enum<?>> value, 
-            Class<? extends Enum<?>> suit) {
+            Class<? extends Enum<?>> suit, Game game) {
         this.value = value;
         this.suit = suit;
+        this.game = game;
     }
     
     public ArrayList<Card> create(){
@@ -37,8 +39,8 @@ public class DeckGenerator {
                 for(Object p: suit.getEnumConstants()) {
                     Suit cardSuit = (Suit)p;
                     Card card = specialDeck? 
-                            new SpecialCard(cardValue, cardSuit) : 
-                            new NumberedCard(cardValue, cardSuit);
+                            new SpecialCard(cardValue, cardSuit, this.game) : 
+                            new NumberedCard(cardValue, cardSuit, this.game);
                     deck.add(card);
                 }   
             }

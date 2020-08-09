@@ -27,10 +27,10 @@ public class Uno extends Game {
         
         ArrayList<Card> cards = new ArrayList();
         
-        DeckGenerator numberedCards = new DeckGenerator(Number.class, Color.class);
+        DeckGenerator numberedCards = new DeckGenerator(Number.class, Color.class, this);
         cards.addAll(numberedCards.create());
         
-        DeckGenerator specialCards = new DeckGenerator(Effect.class, Color.class);
+        DeckGenerator specialCards = new DeckGenerator(Effect.class, Color.class, this);
         cards.addAll(specialCards.create());
         
         Deck unoDeck = new Deck(cards);
@@ -78,31 +78,103 @@ public class Uno extends Game {
     
     @Override
     public void play(){
-        int playerIndex = this.getCurrentPlayer();
-        Player currentPlayer = this.getPlayers().get(playerIndex);
-        if (currentPlayer instanceof HumanPlayer){
-            this.userTurn(currentPlayer);
-        } else {
-            this.computerTurn(currentPlayer);
-        }
+        boolean victory = false;
+        do {
+            int playerIndex = this.getCurrentPlayer();
+            Player currentPlayer = this.getPlayers().get(playerIndex);
+            if (currentPlayer instanceof HumanPlayer){
+                this.userTurn(currentPlayer);
+            } else {
+                this.computerTurn(currentPlayer);
+            } 
+            
+            playerIndex = this.getCurrentPlayer();
+            if (this.isDirClockwise()){
+                if (playerIndex == this.getPlayers().size() - 1){
+                    playerIndex = 0;
+                } else {
+                    playerIndex++;
+                }
+            } else {
+                if (playerIndex == 0){
+                    playerIndex = this.getPlayers().size() - 1;
+                } else {
+                    playerIndex--;
+                } 
+            }
+            
+            this.setCurrentPlayer(playerIndex);
+            victory = checkVictory();
+        } while (!victory);
+        this.declareWinner(this.getWinner());
     }
     
+    public boolean checkVictory(){
+        for(Player player : this.getPlayers()){
+            if (player.getPlayerHand().getCards().isEmpty()){
+                this.setWinner(player);
+                return true;
+            }
+        }
+        return false;
+    }
+      
     @Override
-    public void declareWinner() {
-        
+    public void declareWinner(Player player) {
+        System.out.println(player.getName());
     }
     
     public void userTurn(Player player) {
+        Scanner scan = new Scanner(System.in);
+        
+        Deck currentDeck = this.getDeck();
         Card modelCard = this.getDiscardPile().getCardOnTop();
         Hand playerHand = player.getPlayerHand();
+        ArrayList<Card> playerCards = playerHand.getCards();
+        
         System.out.println("User turn: " + player.getName());
         System.out.println("Last card played: " + modelCard);
+        System.out.println("Your hand:");
+        for (Card card : playerCards){
+            System.out.printf("%d - %s%n", playerCards.indexOf(card) + 1, card);
+        }
+        System.out.println("Enter your action: 1 - Play a card 2 - Draw a card");
+        int action = scan.nextInt();
+        
+        if (action == 1){
+            
+            System.out.println("Enter the number of the card to play: ");
+            int playIndex = scan.nextInt() - 1;
+            Card playCard = playerCards.get(playIndex);
+            player.play(playCard, this.getDiscardPile());
+            
+        } else if (action == 2){
+            
+            player.draw(1, currentDeck);
+
+        }
     }
     
     public void computerTurn(Player player) {
         Card modelCard = this.getDiscardPile().getCardOnTop();
+        Hand playerHand = player.getPlayerHand();
+        CardSelector selector = new CardSelector(playerHand, modelCard);
+        
         System.out.println("Computer turn: " + player.getName());
         System.out.println("Last card played: " + modelCard);
+        
+        for (Card card : playerHand.getCards()){
+            System.out.printf("%d - %s%n", playerHand.getCards().indexOf(card) + 1, card);
+        }
+        
+        Card playCard = selector.decide();
+        
+        if (playCard != null){
+            player.play(playCard, this.getDiscardPile());
+        } else {
+            player.draw(1, this.getDeck());
+        }
+        
     }
     
 }

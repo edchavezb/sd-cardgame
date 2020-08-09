@@ -5,8 +5,8 @@ public class NumberedCard extends Card {
     private Color color;
     private Number cardVal;
     
-    public NumberedCard(Value value, Suit suit) {
-        super(value, suit);
+    public NumberedCard(Value value, Suit suit, Game game) {
+        super(value, suit, game);
     }
 
     public Color getColor() {

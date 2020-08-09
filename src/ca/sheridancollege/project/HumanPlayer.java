@@ -5,14 +5,17 @@ public class HumanPlayer extends Player {
     public HumanPlayer(String name) {
         super(name);
     }
-
-    public void playCard() {}
     
     @Override
-    public void draw(int drawAmount) {}
-    
-    @Override
-    public void play() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void play(Card card, DiscardPile discard) {
+        if (card instanceof SpecialCard){
+            SpecialCard effectCard = (SpecialCard) card;
+            effectCard.useEffect(this);
+        }
+        discard.getCards().add(card);
+        discard.setCardOnTop();
+        this.getPlayerHand().getCards().remove(card);
+        System.out.printf("%s played %s%n%n", this.getName(), card);
     }
+    
 }
