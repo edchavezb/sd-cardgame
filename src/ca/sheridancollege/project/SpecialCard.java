@@ -1,5 +1,6 @@
 package ca.sheridancollege.project;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,37 +17,33 @@ public class SpecialCard extends Card {
     }
     
     public void reverseEffect() {
-        System.out.println(this.getGame());
         this.getGame().setDirClockwise(!this.getGame().isDirClockwise());
     }
     
     public void skipEffect(boolean draw, int drawAmt) {
         Game game = this.getGame();
         int index = game.getCurrentPlayer();
+        ArrayList<Player> players = game.getPlayers();
         boolean clockwise = game.isDirClockwise();
-        Player nextPlayer = clockwise ? game.getPlayers().get(index + 1)
-                : game.getPlayers().get(index - 1);
-        
-        System.out.println(this.getGame());
-        
-        if (draw){
-            nextPlayer.draw(drawAmt, game.getDeck());
-        }
-                
+        int nextPlayer;
+                      
         if (clockwise){
             if (index == this.getGame().getPlayers().size() - 1){
-                index = 0;
+                nextPlayer = 0;
             } else {
-                index = index++;
+                nextPlayer = ++index;
             }
         } else {
             if (index == 0){
-                index = this.getGame().getPlayers().size() - 1;
+                nextPlayer = this.getGame().getPlayers().size() - 1;
             } else {
-                index = index--;
+                nextPlayer = --index;
             }
+        } 
+        if (draw){
+            players.get(nextPlayer).draw(drawAmt, game.getDeck());
         }
-        this.getGame().setCurrentPlayer(index);  
+        game.setCurrentPlayer(nextPlayer);  
     }
     
     public void wildEffect(boolean prompt){

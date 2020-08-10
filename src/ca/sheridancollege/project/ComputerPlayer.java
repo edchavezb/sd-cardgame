@@ -15,6 +15,7 @@ public class ComputerPlayer extends Player {
         discard.getCards().add(card);
         discard.setCardOnTop();
         this.getPlayerHand().getCards().remove(card);
-        System.out.printf("%s played %s%n%n", this.getName(), card);
+        System.out.printf("%s played %s%n", this.getName(), card);
+        System.out.printf("%s now has %d cards%n%n", this.getName(), this.getPlayerHand().getCards().size());
     }
 }

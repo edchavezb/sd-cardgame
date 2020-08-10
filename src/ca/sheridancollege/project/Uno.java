@@ -39,8 +39,6 @@ public class Uno extends Game {
         DiscardPile discard = new DiscardPile(new ArrayList<Card>());
         this.setDiscardPile(discard);
         
-        System.out.println(unoDeck.getCards().size());
-        
         ArrayList<Player> players = new ArrayList();
         HandGenerator unoHand = new HandGenerator(this.getDeck(), 7);
         
@@ -71,9 +69,7 @@ public class Uno extends Game {
         discard.getCards().add(randomCard);
         discard.setCardOnTop();
         
-        System.out.println("Hands created");
-        System.out.println(unoDeck.getCards().size());
-        
+        System.out.println("Let's play UNO!\n");       
     }
     
     @Override
@@ -121,7 +117,7 @@ public class Uno extends Game {
       
     @Override
     public void declareWinner(Player player) {
-        System.out.println(player.getName());
+        System.out.println(player.getName() + " is the WINNER!");
     }
     
     public void userTurn(Player player) {
@@ -133,40 +129,47 @@ public class Uno extends Game {
         ArrayList<Card> playerCards = playerHand.getCards();
         
         System.out.println("User turn: " + player.getName());
-        System.out.println("Last card played: " + modelCard);
+        System.out.printf("Last card played: %s %s%n", modelCard.getValue().getValueName(), modelCard.getSuit().getSuitName());
         System.out.println("Your hand:");
         for (Card card : playerCards){
             System.out.printf("%d - %s%n", playerCards.indexOf(card) + 1, card);
         }
-        System.out.println("Enter your action: 1 - Play a card 2 - Draw a card");
-        int action = scan.nextInt();
         
-        if (action == 1){
+        boolean validCard = true;
             
-            System.out.println("Enter the number of the card to play: ");
-            int playIndex = scan.nextInt() - 1;
-            Card playCard = playerCards.get(playIndex);
-            player.play(playCard, this.getDiscardPile());
-            
-        } else if (action == 2){
-            
-            player.draw(1, currentDeck);
+        do {
+            System.out.println("Enter your action: 1 - Play a card 2 - Draw a card");
+            int action = scan.nextInt();
+        
+            if (action == 1){
 
-        }
+                System.out.println("Enter the number of the card to play: ");
+                int playIndex = scan.nextInt() - 1;
+                Card playCard = playerCards.get(playIndex);
+
+                if(CardValidator.check(playCard, playerHand, modelCard)){
+                    player.play(playCard, this.getDiscardPile());
+                    validCard = true;
+                } else {
+                    System.out.println("This card cannot be played. Please choose another one");
+                    validCard = false;
+                }
+                
+            } else if (action == 2){
+                player.draw(1, currentDeck);
+            }
+        
+        } while (validCard == false);
     }
     
     public void computerTurn(Player player) {
         Card modelCard = this.getDiscardPile().getCardOnTop();
         Hand playerHand = player.getPlayerHand();
-        CardSelector selector = new CardSelector(playerHand, modelCard);
-        
+
         System.out.println("Computer turn: " + player.getName());
         System.out.println("Last card played: " + modelCard);
         
-        for (Card card : playerHand.getCards()){
-            System.out.printf("%d - %s%n", playerHand.getCards().indexOf(card) + 1, card);
-        }
-        
+        CardSelector selector = new CardSelector(playerHand, modelCard);
         Card playCard = selector.decide();
         
         if (playCard != null){
