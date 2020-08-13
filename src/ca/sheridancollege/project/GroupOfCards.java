@@ -21,7 +21,18 @@ public class GroupOfCards {
     //The group of cards, stored in an ArrayList
     private ArrayList<Card> cards;
 
-    public GroupOfCards() {}
+    public GroupOfCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
+    
+    /**
+     * A method that will set the group of cards on this group of cards
+     *
+     * @param cards
+     */
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
 
     /**
      * A method that will get the group of cards as an ArrayList
@@ -32,6 +43,9 @@ public class GroupOfCards {
         return cards;
     }
 
+    /**
+     * A method that shuffles the collection of cards.
+     */
     public void shuffle() {
         Collections.shuffle(cards);
     }
