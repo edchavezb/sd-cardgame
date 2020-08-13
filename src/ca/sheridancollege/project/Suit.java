@@ -6,8 +6,9 @@
 package ca.sheridancollege.project;
 
 /**
- *
- * @author 213388
+ * An interface that is implemented by an enum class that models a collection of suits.
+ * 
+ * @author Edgar Chavez June 2020
  */
 public interface Suit {
     

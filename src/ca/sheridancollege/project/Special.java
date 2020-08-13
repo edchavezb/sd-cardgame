@@ -6,8 +6,10 @@
 package ca.sheridancollege.project;
 
 /**
- *
- * @author 213388
+ * An interface that is used to determine if an enum value will create a 
+ * Special Card with an effect or a regular Numbered Card.
+ * 
+ * @author Edgar Chavez June 2020
  */
 public interface Special {
     

@@ -43,6 +43,9 @@ public class GroupOfCards {
         return cards;
     }
 
+    /**
+     * A method that shuffles the collection of cards.
+     */
     public void shuffle() {
         Collections.shuffle(cards);
     }

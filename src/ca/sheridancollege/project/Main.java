@@ -5,11 +5,10 @@
  */
 package ca.sheridancollege.project;
 
-import java.util.ArrayList;
-
 /**
- *
- * @author Edgar Chavez
+ * A main class to create an Uno object and run the game.
+ * 
+ * @author Edgar Chavez June 2020
  */
 public class Main {
     public static void main(String[] args){

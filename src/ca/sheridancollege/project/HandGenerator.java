@@ -9,19 +9,34 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
- * @author 213388
+ * This class is used to generate a player's hand using random cards from a 
+ * Deck object.
+ * 
+ * @author Edgar Chavez June 2020
  */
 public class HandGenerator {
     
     private final Deck originDeck;
     private final int handSize;
 
+    /**
+     * The default constructor for HandGenerator takes a Deck object and hand
+     * size to generate the hand.
+     * 
+     * @param originDeck The deck the cards will come from.
+     * @param handSize The size of the resulting hand.
+     */
     public HandGenerator(Deck originDeck, int handSize) {
         this.originDeck = originDeck;
         this.handSize = handSize;
     }
     
+    /**
+     * This method will take the Deck object and generate a hand of the desired
+     * size.
+     * 
+     * @return The Hand object containing the cards taken from the deck. 
+     */
     public Hand create(){
         ArrayList<Card> hand = new ArrayList<Card>();
         ArrayList<Card> deck = this.originDeck.getCards();

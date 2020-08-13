@@ -44,14 +44,30 @@ public abstract class Player {
         this.name = name;
     }
     
+    /**
+     * Retrieves this player's hand.
+     * 
+     * @return The player's hand. 
+     */
     public Hand getPlayerHand() {
         return playerHand;
     }
 
+    /**
+     * Gives the player a hand to play with.
+     * 
+     * @param playerHand The hand the player will play with.
+     */
     public void setPlayerHand(Hand playerHand) {
         this.playerHand = playerHand;
     }
     
+    /**
+     * This method takes a random card or cards from the deck and adds it to the player's hand.
+     * 
+     * @param drawAmount The amount of cards the player will draw.
+     * @param deck The deck the cards will come from.
+     */
     public void draw(int drawAmount, Deck deck) {
         for (int i = 0; i < drawAmount; i++) {
             int random = new Random().nextInt(deck.getCards().size());
